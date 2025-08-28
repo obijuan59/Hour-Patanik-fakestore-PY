@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>ShowMe ADMIN 2 - Dashboard</title>
+    <title>Dashboard</title>
 
     <!-- Custom fonts for this template-->
     <link href="../../static/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -45,49 +45,79 @@
 
     <!-- Custom Gradient Styles -->
     <style>
-        .bg-gradient-purple {
-            background: linear-gradient(135deg, #6A1B9A, #8E24AA) !important;
+        /* Sidebar */
+        .sidebar {
+            background: linear-gradient(180deg, #4B0082, #8A2BE2);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .sidebar .nav-link {
+            transition: all 0.3s ease;
+            color: #fff;
+        }
+
+        .sidebar .nav-link:hover {
+            background: linear-gradient(90deg, #7B1FA2, #BA68C8);
+            color: #fff;
         }
 
         .sidebar .nav-item.active .nav-link {
             background: linear-gradient(135deg, #6A1B9A, #8E24AA) !important;
         }
 
-        .text-gradient-purple {
-            background: linear-gradient(135deg, #6A1B9A, #8E24AA);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        .sidebar .nav-link i {
+            font-size: 1.2rem;
         }
 
+        /* Sidebar brand */
+        .sidebar-brand-text {
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        /* Topbar */
+        .navbar {
+            background: #fff;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar .btn-gradient-purple {
+            border-radius: 8px;
+            padding: 0.5rem 1rem;
+            box-shadow: 0 3px 8px rgba(106, 27, 154, 0.4);
+            transition: all 0.3s;
+        }
+
+        .navbar .btn-gradient-purple:hover {
+            background: linear-gradient(135deg, #BA68C8, #7B1FA2);
+        }
+
+        /* Buttons */
         .btn-gradient-purple {
             background: linear-gradient(135deg, #6A1B9A, #8E24AA);
             color: #fff;
             font-weight: 600;
             transition: all 0.3s;
+            border-radius: 8px;
         }
 
         .btn-gradient-purple:hover {
-            background: linear-gradient(135deg, #8E24AA, #6A1B9A);
+            background: linear-gradient(135deg, #BA68C8, #7B1FA2);
             color: #fff;
         }
 
-        .navbar .topbar .btn-primary {
-            background: linear-gradient(135deg, #6A1B9A, #8E24AA);
-            border: none;
+        /* Text Gradient */
+        .text-gradient-purple {
+            background: linear-gradient(135deg, #7B1FA2, #BA68C8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
-        .navbar .topbar .btn-primary:hover {
-            background: linear-gradient(135deg, #8E24AA, #6A1B9A);
-        }
-
-        .dropdown-menu {
-            border: 0;
-            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
-        }
-
-        .dropdown-item:hover {
-            background: linear-gradient(135deg, #6A1B9A, #8E24AA);
-            color: #fff;
+        /* Cards and Modals */
+        .card,
+        .modal-content {
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
         }
 
         .modal-header.bg-gradient-purple,
@@ -95,8 +125,33 @@
             color: #fff;
         }
 
-        .border-gradient-purple {
-            border: 2px solid #6A1B9A;
+        /* Dropdowns */
+        .dropdown-menu {
+            border-radius: 12px;
+            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+        }
+
+        .dropdown-item:hover {
+            background: linear-gradient(90deg, #7B1FA2, #BA68C8);
+            color: #fff;
+        }
+
+        /* Scroll to Top */
+        .scroll-to-top {
+            background: linear-gradient(135deg, #6A1B9A, #8E24AA);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Icons hover */
+        .navbar .fa-bell,
+        .navbar .fa-envelope {
+            color: #6A1B9A;
+            transition: all 0.3s ease;
+        }
+
+        .navbar .fa-bell:hover,
+        .navbar .fa-envelope:hover {
+            color: #BA68C8;
         }
     </style>
 </head>
@@ -114,14 +169,14 @@
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-laugh-wink"></i>
                 </div>
-                <div class="sidebar-brand-text mx-6 pl-2 text-gradient-purple">ShowMe Admin</div>
+                <div class="sidebar-brand-text mx-6 pl-2 text-gradient-purple">FakeStore Admin</div>
             </a>
 
             <hr class="sidebar-divider my-0">
 
             <li class="nav-item {% if request.path == '/admin' %}active{% endif %}">
                 <a class="nav-link" href="/admin">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <i class="fas fa-gauge-high"></i>
                     <span>Dashboard</span></a>
             </li>
 
@@ -133,7 +188,7 @@
 
             <li class="nav-item {% if request.path == '/products' %}active{% endif %}">
                 <a class="nav-link collapsed" href="/products">
-                    <i class="fas fa-fw fa-cog"></i>
+                    <i class="fas fa-box-open"></i>
                     <span>Products</span>
                 </a>
             </li>
@@ -173,7 +228,7 @@
                         <li class="nav-item dropdown no-arrow mx-1">
                             <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-bell fa-fw"></i>
+                                <i class="fas fa-bell-concierge fa-fw"></i>
                                 <span class="badge badge-danger badge-counter">3+</span>
                             </a>
                             <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -188,7 +243,7 @@
                                         </div>
                                     </div>
                                     <div>
-                                        <div class="small text-gray-500">December 12, 2019</div>
+                                        <div class="small text-gray-500">December 11, 2019</div>
                                         <span class="font-weight-bold">A new monthly report is ready to download!</span>
                                     </div>
                                 </a>
@@ -200,7 +255,7 @@
                         <li class="nav-item dropdown no-arrow mx-1">
                             <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-envelope fa-fw"></i>
+                                <i class="fas fa-message fa-fw"></i>
                                 <span class="badge badge-danger badge-counter">7</span>
                             </a>
                             <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -229,8 +284,8 @@
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
-                                <img class="img-profile rounded-circle" src="../../static/img/undraw_profile.svg">
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Mr patanik </span>
+                                <img class="img-profile rounded-circle" src="../../static/img/Mrpatanik.jpg">
                             </a>
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
