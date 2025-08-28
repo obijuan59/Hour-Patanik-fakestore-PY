@@ -10,40 +10,29 @@
 
     <title>Dashboard</title>
 
-    <!-- Custom fonts for this template-->
+    <!-- Fonts -->
     <link href="../../static/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-    <link
-        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,300,400,600,700,800,900" rel="stylesheet">
 
-    <!-- Custom styles for this template-->
+    <!-- CSS -->
     <link href="../../static/css/sb-admin-2.min.css" rel="stylesheet">
 
-    <!-- jQuery first (required by Bootstrap) -->
+    <!-- jQuery & Bootstrap -->
     <script src="../../static/vendor/jquery/jquery.min.js"></script>
-    <script src="../../static/vendor/bootstrap/js/"></script>
-
-    <!-- Bootstrap core JavaScript -->
     <script src="../../static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-    <!-- Optional: jQuery Easing plugin -->
     <script src="../../static/vendor/jquery-easing/jquery.easing.min.js"></script>
-
-    <!-- SB Admin 2 scripts -->
     <script src="../../static/js/sb-admin-2.min.js"></script>
 
-    <!-- Page level plugins -->
+    <!-- Chart.js -->
     <script src="../../static/vendor/chart.js/Chart.min.js"></script>
-
-    <!-- Page level custom scripts -->
     <script src="../../static/js/demo/chart-area-demo.js"></script>
     <script src="../../static/js/demo/chart-pie-demo.js"></script>
 
-    <!-- Vue 3 and SweetAlert -->
+    <!-- Vue & SweetAlert -->
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-    <!-- Custom Gradient Styles -->
+    <!-- Custom Styles -->
     <style>
         /* Sidebar */
         .sidebar {
@@ -65,11 +54,6 @@
             background: linear-gradient(135deg, #6A1B9A, #8E24AA) !important;
         }
 
-        .sidebar .nav-link i {
-            font-size: 1.2rem;
-        }
-
-        /* Sidebar brand */
         .sidebar-brand-text {
             font-weight: 700;
             font-size: 1.1rem;
@@ -78,80 +62,85 @@
         /* Topbar */
         .navbar {
             background: #fff;
+            border-radius: 12px;
+            padding: 0.5rem 1rem;
             box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
         }
 
-        .navbar .btn-gradient-purple {
-            border-radius: 8px;
-            padding: 0.5rem 1rem;
-            box-shadow: 0 3px 8px rgba(106, 27, 154, 0.4);
+        .navbar .nav-link {
             transition: all 0.3s;
         }
 
-        .navbar .btn-gradient-purple:hover {
-            background: linear-gradient(135deg, #BA68C8, #7B1FA2);
+        .navbar .nav-link:hover {
+            transform: translateY(-2px);
         }
 
-        /* Buttons */
-        .btn-gradient-purple {
-            background: linear-gradient(135deg, #6A1B9A, #8E24AA);
-            color: #fff;
-            font-weight: 600;
-            transition: all 0.3s;
-            border-radius: 8px;
-        }
-
-        .btn-gradient-purple:hover {
-            background: linear-gradient(135deg, #BA68C8, #7B1FA2);
-            color: #fff;
-        }
-
-        /* Text Gradient */
         .text-gradient-purple {
             background: linear-gradient(135deg, #7B1FA2, #BA68C8);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
-        /* Cards and Modals */
-        .card,
-        .modal-content {
+        .btn-gradient-purple {
+            background: linear-gradient(135deg, #6A1B9A, #8E24AA);
+            color: #fff;
+            font-weight: 600;
+            border-radius: 50px;
+            transition: all 0.3s;
+            padding: 0.5rem 1rem;
+        }
+
+        .btn-gradient-purple:hover {
+            background: linear-gradient(135deg, #BA68C8, #7B1FA2);
+        }
+
+        .badge-gradient-purple {
+            background: linear-gradient(135deg, #6A1B9A, #8E24AA);
+            color: #fff;
+            font-weight: 600;
+            border-radius: 12px;
+            padding: 0.25em 0.5em;
+            font-size: 0.75rem;
+        }
+
+        .img-profile.border-gradient-purple {
+            border: 2px solid;
+            border-image: linear-gradient(135deg, #6A1B9A, #8E24AA) 1;
+        }
+
+        /* Cards and Tables */
+        .card, .modal-content {
             border-radius: 15px;
             box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
         }
 
-        .modal-header.bg-gradient-purple,
-        .modal-footer .btn-gradient-purple {
+        .card:hover {
+            transform: translateY(-4px);
+            transition: all 0.3s ease;
+        }
+
+        .table thead {
+            background: linear-gradient(135deg, #7B1FA2, #BA68C8);
             color: #fff;
         }
 
-        /* Dropdowns */
-        .dropdown-menu {
+        .table-hover tbody tr:hover {
+            background: rgba(138, 43, 226, 0.1);
+        }
+
+        .table-responsive {
             border-radius: 12px;
-            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+            overflow: hidden;
         }
 
-        .dropdown-item:hover {
-            background: linear-gradient(90deg, #7B1FA2, #BA68C8);
-            color: #fff;
-        }
-
-        /* Scroll to Top */
         .scroll-to-top {
             background: linear-gradient(135deg, #6A1B9A, #8E24AA);
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
 
-        /* Icons hover */
-        .navbar .fa-bell,
-        .navbar .fa-envelope {
-            color: #6A1B9A;
-            transition: all 0.3s ease;
-        }
-
-        .navbar .fa-bell:hover,
-        .navbar .fa-envelope:hover {
-            color: #BA68C8;
+        .modal-header.bg-gradient-purple,
+        .modal-footer .btn-gradient-purple {
+            color: #fff;
         }
     </style>
 </head>
@@ -164,10 +153,10 @@
         <!-- Sidebar -->
         <ul class="navbar-nav bg-gradient-purple sidebar sidebar-dark accordion" id="accordionSidebar">
 
-            <!-- Sidebar - Brand -->
+            <!-- Sidebar Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/admin">
                 <div class="sidebar-brand-icon rotate-n-15">
-                    <i class="fas fa-laugh-wink"></i>
+                    <i class="fas fa-fast-backward"></i>
                 </div>
                 <div class="sidebar-brand-text mx-6 pl-2 text-gradient-purple">FakeStore Admin</div>
             </a>
@@ -181,10 +170,7 @@
             </li>
 
             <hr class="sidebar-divider">
-
-            <div class="sidebar-heading">
-                Interface
-            </div>
+            <div class="sidebar-heading">Interface</div>
 
             <li class="nav-item {% if request.path == '/products' %}active{% endif %}">
                 <a class="nav-link collapsed" href="/products">
@@ -203,17 +189,17 @@
             <div id="content">
 
                 <!-- Topbar -->
-                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+                <nav class="navbar navbar-expand navbar-light topbar mb-4 shadow-sm">
 
+                    <!-- Sidebar Toggle -->
                     <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
                         <i class="fa fa-bars"></i>
                     </button>
 
-                    <form
-                        class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                        <div class="input-group">
-                            <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
-                                aria-label="Search" aria-describedby="basic-addon2">
+                    <!-- Topbar Search -->
+                    <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                        <div class="input-group" style="border-radius: 50px; overflow: hidden; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
+                            <input type="text" class="form-control bg-light border-0 small" placeholder="Search..." aria-label="Search">
                             <div class="input-group-append">
                                 <button class="btn btn-gradient-purple" type="button">
                                     <i class="fas fa-search fa-sm"></i>
@@ -222,101 +208,46 @@
                         </div>
                     </form>
 
-                    <ul class="navbar-nav ml-auto">
-
-                        <!-- Alerts Dropdown -->
+                    <!-- Topbar Navbar -->
+                    <ul class="navbar-nav ml-auto align-items-center">
+                        <!-- Alerts -->
                         <li class="nav-item dropdown no-arrow mx-1">
-                            <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-bell-concierge fa-fw"></i>
-                                <span class="badge badge-danger badge-counter">3+</span>
+                            <a class="nav-link dropdown-toggle position-relative" href="#" id="alertsDropdown" role="button" data-toggle="dropdown">
+                                <i class="fas fa-bell fa-fw text-gradient-purple"></i>
+                                <span class="badge badge-gradient-purple position-absolute" style="top: -5px; right: -5px;">3+</span>
                             </a>
-                            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                aria-labelledby="alertsDropdown">
-                                <h6 class="dropdown-header text-gradient-purple">
-                                    Alerts Center
-                                </h6>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="mr-3">
-                                        <div class="icon-circle bg-gradient-purple">
-                                            <i class="fas fa-file-alt text-white"></i>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div class="small text-gray-500">December 11, 2019</div>
-                                        <span class="font-weight-bold">A new monthly report is ready to download!</span>
-                                    </div>
-                                </a>
-                                <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
-                            </div>
                         </li>
 
-                        <!-- Messages Dropdown -->
+                        <!-- Messages -->
                         <li class="nav-item dropdown no-arrow mx-1">
-                            <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-message fa-fw"></i>
-                                <span class="badge badge-danger badge-counter">7</span>
+                            <a class="nav-link dropdown-toggle position-relative" href="#" id="messagesDropdown" role="button" data-toggle="dropdown">
+                                <i class="fas fa-envelope fa-fw text-gradient-purple"></i>
+                                <span class="badge badge-gradient-purple position-absolute" style="top: -5px; right: -5px;">7</span>
                             </a>
-                            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                aria-labelledby="messagesDropdown">
-                                <h6 class="dropdown-header text-gradient-purple">
-                                    Message Center
-                                </h6>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="../../static/img/undraw_profile_1.svg"
-                                            alt="...">
-                                        <div class="status-indicator bg-success"></div>
-                                    </div>
-                                    <div class="font-weight-bold">
-                                        <div class="text-truncate">Hi! Can you help me with a problem?</div>
-                                        <div class="small text-gray-500">Emily Fowler · 58m</div>
-                                    </div>
-                                </a>
-                                <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
-                            </div>
                         </li>
 
                         <div class="topbar-divider d-none d-sm-block"></div>
 
-                        <!-- User Information -->
+                        <!-- User Info -->
                         <li class="nav-item dropdown no-arrow">
-                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Mr patanik </span>
-                                <img class="img-profile rounded-circle" src="../../static/img/Mrpatanik.jpg">
+                            <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="userDropdown" role="button" data-toggle="dropdown">
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Mr patanik</span>
+                                <img class="img-profile rounded-circle border-gradient-purple" src="../../static/img/Mrpatanik.jpg">
                             </a>
-                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Profile
-                                </a>
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Settings
-                                </a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Logout
-                                </a>
-                            </div>
                         </li>
-
                     </ul>
-
                 </nav>
                 <!-- End of Topbar -->
 
-                <div id="content-wrapper" class="d-flex flex-column">
+                <!-- Content Area -->
+                <div class="container-fluid">
                     {% block admin_content %}{% endblock %}
                 </div>
 
             </div>
             <!-- End of Main Content -->
 
+            <!-- Footer -->
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
@@ -331,19 +262,19 @@
     </div>
     <!-- End of Page Wrapper -->
 
+    <!-- Scroll to Top -->
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fas fa-angle-up"></i>
     </a>
 
-    <!-- Logout Modal-->
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
+    <!-- Logout Modal -->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content border-gradient-purple">
                 <div class="modal-header bg-gradient-purple text-white">
-                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                    <button class="close text-white" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
+                    <h5 class="modal-title">Ready to Leave?</h5>
+                    <button class="close text-white" type="button" data-dismiss="modal">
+                        <span>×</span>
                     </button>
                 </div>
                 <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
