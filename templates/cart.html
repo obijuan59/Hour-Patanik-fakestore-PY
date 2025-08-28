@@ -1,0 +1,86 @@
+{% extends "master.html" %}
+{% block main_content %}
+<div class="container mt-5">
+    <h2 class="mb-4 text-center">🛒 Your Shopping Cart</h2>
+
+    <div
+        class="card mb-4 shadow-sm p-2"
+        v-for="(item, index) in cart_list"
+        :key="item.id"
+        style="border-radius: 12px; overflow: hidden;"
+    >
+        <div class="row align-items-center">
+            <!-- Product Image -->
+            <div class="col-md-3 text-center p-2">
+                <img
+                    :src="'/static/uploads/' + item.image"
+                    :alt="item.title"
+                    class="img-fluid rounded"
+                    style="max-height: 150px; object-fit: cover;"
+                >
+            </div>
+
+            <!-- Product Details -->
+            <div class="col-md-6">
+                <div class="card-body">
+                    <h5 class="card-title font-weight-bold">[[ item.title ]]</h5>
+                    <p class="text-muted mb-1 small">Category: [[ item.category ]]</p>
+                    <p class="mb-2" style="color: #555;">[[ item.description ]]</p>
+                </div>
+            </div>
+
+            <!-- Quantity & Actions -->
+            <div class="col-md-3 text-center">
+                <div class="card-body">
+                    <h5 class="text-success font-weight-bold">$[[ (item.price * item.qty).toFixed(2) ]]</h5>
+                    <div class="input-group mb-2 justify-content-center" style="max-width: 130px;">
+                        <button class="btn btn-outline-secondary" type="button" @click="decreaseQty(item)">-</button>
+                        <input type="text" class="form-control text-center" v-model="item.qty" readonly>
+                        <button class="btn btn-outline-secondary" type="button" @click="increaseQty(item)">+</button>
+                    </div>
+                    <button @click="removeCartItem(index)" class="btn btn-danger btn-sm btn-block">
+                        Remove
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Empty Cart Message -->
+    <div v-if="cart_list.length === 0" class="text-center my-5">
+        <h4 class="text-muted">Your cart is empty 😔</h4>
+        <p>Add some products to proceed with your order.</p>
+    </div>
+
+    <!-- Cart Summary -->
+    <div class="row justify-content-end" v-if="cart_list.length > 0">
+        <div class="col-md-4">
+            <div class="card shadow-sm rounded">
+                <div class="card-body">
+                    <h5 class="mb-3">Order Summary</h5>
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>Subtotal</span>
+                        <span class="font-weight-bold">$[[ subtotal ]]</span>
+                    </div>
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>Shipping</span>
+                        <span class="font-weight-bold">$[[ shipping ]]</span>
+                    </div>
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>Tax</span>
+                        <span class="font-weight-bold">$[[ tax ]]</span>
+                    </div>
+                    <hr>
+                    <div class="d-flex justify-content-between font-weight-bold">
+                        <span>Total</span>
+                        <span>$[[ total ]]</span>
+                    </div>
+                    <button @click="checkout" class="btn btn-success btn-block mt-3" style="border-radius: 8px; font-size: 1.05rem;">
+                        Proceed to Checkout
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

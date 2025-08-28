@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>FakeStore</title>
+  {% include "style.html" %}
+</head>
+
+<body>
+  <div id="app">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm mb-4">
+      <a class="navbar-brand font-weight-bold" href="/">FakeStore</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="/">Catalog</a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" href="/support">Support</a>
+          </li>
+        </ul>
+
+        <form class="form-inline my-2 my-lg-0 mr-2">
+          <input class="form-control mr-sm-2" type="search" placeholder="Search by category or title"
+            aria-label="Search" v-model="searchQuery">
+        </form>
+
+        <a href="/cart" class="btn btn-outline-success my-2 my-sm-0">
+          🛒 Cart ([[ cart_list.length ]])
+        </a>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container">
+      {% block main_content %}{% endblock %}
+    </div>
+  </div>
+
+  {% include "script.html" %}
+
+  <script>
+    const { createApp, ref, computed, onMounted } = Vue;
+
+    createApp({
+      delimiters: ['[[', ']]'],
+      setup() {
+        const cart_list = ref(JSON.parse(localStorage.getItem('cart') ?? '[]'));
+        const searchQuery = ref('');
+        const priceLimit = ref(500);
+        const selected_product = ref({});
+        const quantity = ref(1);
+
+        const products = ref({{ products|default([])| tojson | safe }});
+        const product = ref({{ product|default({}) | tojson | safe }});
+
+        const subtotal = computed(() =>
+          cart_list.value.reduce((sum, item) => sum + item.price * item.qty, 0).toFixed(2)
+        );
+        const shipping = computed(() => cart_list.value.length > 0 ? 5.99 : 0);
+        const tax = computed(() => (parseFloat(subtotal.value) * 0.1).toFixed(2));
+        const total = computed(() =>
+          (parseFloat(subtotal.value) + shipping.value + parseFloat(tax.value)).toFixed(2)
+        );
+
+        const filteredProducts = computed(() =>
+          products.value.filter(p =>
+            p.title.toLowerCase().includes(searchQuery.value.toLowerCase()) &&
+            p.price <= priceLimit.value
+          )
+        );
+
+        const addToCart = (item = product.value) => {
+          if (quantity.value < 1) {
+            alert('Quantity must be at least 1');
+            return;
+          }
+
+          const existing = cart_list.value.find(p => p.id === item.id);
+          if (existing) existing.qty += quantity.value;
+          else cart_list.value.push({ ...item, qty: quantity.value });
+
+          localStorage.setItem('cart', JSON.stringify(cart_list.value));
+
+          Swal.fire({
+            icon: 'success',
+            title: 'Added to Cart',
+            text: `${item.name} x${quantity.value} added.`,
+            timer: 1200,
+            showConfirmButton: false
+          });
+        };
+
+        const removeCartItem = (index) => {
+          Swal.fire({
+            title: 'Are you sure?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, remove it!',
+            cancelButtonText: 'Cancel',
+          }).then(result => {
+            if (result.isConfirmed) {
+              cart_list.value.splice(index, 1);
+              localStorage.setItem('cart', JSON.stringify(cart_list.value));
+            }
+          });
+        };
+
+        const increaseQty = (item) => {
+          if (item.qty < 10) {
+            item.qty++;
+            localStorage.setItem('cart', JSON.stringify(cart_list.value));
+          }
+        };
+
+        const decreaseQty = (item, index) => {
+          if (item.qty > 1) {
+            item.qty--;
+            localStorage.setItem('cart', JSON.stringify(cart_list.value));
+          } else {
+            Swal.fire({
+              title: 'Are you sure?',
+              text: 'This will remove the item from your cart.',
+              icon: 'warning',
+              showCancelButton: true,
+              confirmButtonText: 'Yes, remove it!',
+              cancelButtonText: 'Cancel',
+            }).then(result => {
+              if (result.isConfirmed) {
+                cart_list.value.splice(index, 1);
+                localStorage.setItem('cart', JSON.stringify(cart_list.value));
+              }
+            });
+          }
+        };
+
+        const showProductDetail = (p) => {
+          selected_product.value = p;
+          $('#productModal').modal('show');
+        };
+
+        const isCartModalVisible = ref(false);
+        const showCartModal = () => isCartModalVisible.value = true;
+        const proceedToPurchase = () => {
+          isCartModalVisible.value = false;
+          window.location.href = "/cart";
+        };
+
+        const checkout = () => window.location.href = "/checkout";
+
+        onMounted(() => {
+          const form = document.getElementById('checkoutForm');
+          if (form) {
+            form.addEventListener('submit', () => {
+              const cartDataInput = document.getElementById('cart_data');
+              if (cartDataInput) cartDataInput.value = JSON.stringify(cart_list.value);
+            });
+          }
+        });
+
+        return {
+          cart_list,
+          products,
+          product,
+          selected_product,
+          searchQuery,
+          priceLimit,
+          quantity,
+          filteredProducts,
+          subtotal,
+          shipping,
+          tax,
+          total,
+          addToCart,
+          removeCartItem,
+          increaseQty,
+          decreaseQty,
+          showProductDetail,
+          isCartModalVisible,
+          showCartModal,
+          proceedToPurchase,
+          checkout
+        };
+      }
+    }).mount('#app');
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,65 @@
+{% extends "master.html" %}
+{% block main_content %}
+
+<div class="row g-4" v-if="product">
+    <!-- Product Image -->
+    <div class="col-md-6 mb-4">
+        <div class="card shadow-sm p-4 border-gradient-purple" style="border-radius: 10px;">
+            <img
+                style="height: 400px; object-fit: contain; border-radius: 6px;"
+                :src="'/static/uploads/' + product.image"
+                class="card-img-top img-fluid"
+                :alt="product.title">
+        </div>
+    </div>
+
+    <!-- Product Details -->
+    <div class="col-md-6">
+        <h3 class="fw-bold text-gradient-purple mb-3">[[ product.title ]]</h3>
+        <span class="badge text-white bg-gradient-purple mb-2">[[ product.category ]]</span>
+        <h4 class="text-gradient-purple mb-3 fw-bold">$[[ product.price ]]</h4>
+        <p class="text-muted mb-4">[[ product.description ]]</p>
+
+        <div class="mb-4">
+            <label for="quantity" class="fw-bold me-2">Quantity:</label>
+            <input type="number" id="quantity" v-model.number="quantity" min="1"
+                   class="form-control d-inline-block" style="width: 80px;">
+        </div>
+
+        <button class="btn btn-gradient-purple btn-lg" @click="addToCart(product, quantity)">
+            <i class="fa fa-shopping-cart"></i> Add to Cart 🛒
+        </button>
+    </div>
+</div>
+
+<div v-else>
+    <center>
+        <h3 class="text-gradient-purple">Product not found</h3>
+    </center>
+</div>
+
+<style>
+    /* Gradient Buttons & Badges */
+    .btn-gradient-purple {
+        background: linear-gradient(135deg, #6A1B9A, #8E24AA);
+        color: #fff;
+        font-weight: 600;
+        transition: all 0.3s;
+    }
+    .btn-gradient-purple:hover {
+        background: linear-gradient(135deg, #8E24AA, #6A1B9A);
+    }
+    .bg-gradient-purple {
+        background: linear-gradient(135deg, #6A1B9A, #8E24AA);
+    }
+    .text-gradient-purple {
+        background: linear-gradient(135deg, #6A1B9A, #8E24AA);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+    .border-gradient-purple {
+        border: 2px solid #6A1B9A;
+    }
+</style>
+
+{% endblock %}

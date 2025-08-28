@@ -1,0 +1,95 @@
+{% extends "master.html" %}
+
+{% block main_content %}
+{% if error %}
+<div class="text-center my-3">
+    <h3 class="text-gradient-purple">{{ error }}</h3>
+</div>
+{% endif %}
+
+<div class="row g-3">
+  <div class="col-lg-3 col-md-4 col-sm-12" v-for="item in products" :key="item.id">
+    <div class="product-card shadow-sm rounded-3 p-2 h-100 d-flex flex-column position-relative">
+
+      <!-- Category Badge -->
+      <span class="badge badge-gradient-purple position-absolute m-2">
+        [[ item.category ]]
+      </span>
+
+      <!-- Product Image -->
+      <div class="text-center">
+        <img
+          :src="'/static/uploads/' + item.image"
+          :alt="item.name"
+          class="img-fluid"
+          style="height: 200px; object-fit: contain;"
+        />
+      </div>
+
+      <!-- Product Info -->
+      <div class="product-card-body mt-2 flex-grow-1 d-flex flex-column justify-content-between">
+        <div>
+          <div class="product-card-title fw-bold text-gradient-purple">[[ item.name ]]</div>
+          <a
+            :href="'/detail/' + item.id"
+            class="text-decoration-underline text-gradient-purple"
+            style="cursor: pointer;"
+          >
+            See more
+          </a>
+        </div>
+
+        <!-- Price & Button -->
+        <div class="mt-3">
+          <span class="product-card-price text-gradient-purple fw-bold">$[[ item.price ]]</span>
+          <button
+            @click="addToCart(item)"
+            class="btn btn-gradient-purple btn-sm mt-2 w-100"
+          >
+            Add to Cart 🛒
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+/* Gradient text */
+.text-gradient-purple {
+    background: linear-gradient(135deg, #6A1B9A, #8E24AA);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* Gradient badge */
+.badge-gradient-purple {
+    background: linear-gradient(135deg, #6A1B9A, #8E24AA);
+    color: #fff;
+    font-weight: 600;
+    padding: 0.35em 0.75em;
+    border-radius: 0.75rem;
+}
+
+/* Gradient button */
+.btn-gradient-purple {
+    background: linear-gradient(135deg, #6A1B9A, #8E24AA);
+    color: #fff;
+    font-weight: 600;
+    transition: all 0.3s;
+}
+.btn-gradient-purple:hover {
+    background: linear-gradient(135deg, #8E24AA, #6A1B9A);
+}
+
+/* Product card shadow */
+.product-card {
+    border: 1px solid #ddd;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+.product-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(138, 43, 226, 0.2);
+}
+</style>
+{% endblock %}
