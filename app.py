@@ -33,8 +33,8 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 mail = Mail(app)
 
 # Telegram config
-BOT_TOKEN = '7205157576:AAGNGn_KUjEHXhyiM3ukgqTCgsQdL2oDLZg'
-CHAT_ID = '@Invoice_notify_blyat_bot'
+BOT_TOKEN='7315075445:AAGvS_nKqXZoUNh-1494c-pJ7QVZad3MGnQ'
+CHAT_ID='@su79_fafa168'
 
 import route
 
